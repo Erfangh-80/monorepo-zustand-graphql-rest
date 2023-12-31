@@ -1,0 +1,53 @@
+{
+  "name": "bc-prisma-rest",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/bc/prisma-rest/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nx/webpack:webpack",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "target": "node",
+        "compiler": "tsc",
+        "outputPath": "dist/apps/bc/prisma-rest",
+        "main": "apps/bc/prisma-rest/src/main.ts",
+        "tsConfig": "apps/bc/prisma-rest/tsconfig.app.json",
+        "assets": ["apps/bc/prisma-rest/src/assets"],
+        "webpackConfig": "apps/bc/prisma-rest/webpack.config.js"
+      },
+      "configurations": {
+        "development": {},
+        "production": {}
+      }
+    },
+    "serve": {
+      "executor": "@nx/js:node",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "bc-prisma-rest:build"
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "bc-prisma-rest:build:development"
+        },
+        "production": {
+          "buildTarget": "bc-prisma-rest:build:production"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"]
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "apps/bc/prisma-rest/jest.config.ts"
+      }
+    }
+  },
+  "tags": []
+}
