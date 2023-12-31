@@ -1,0 +1,58 @@
+{
+  "name": "fr-prisma-graphql",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/fr/prisma-graphql",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nx/next:build",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "outputPath": "dist/apps/fr/prisma-graphql"
+      },
+      "configurations": {
+        "development": {
+          "outputPath": "apps/fr/prisma-graphql"
+        },
+        "production": {}
+      }
+    },
+    "serve": {
+      "executor": "@nx/next:server",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "fr-prisma-graphql:build",
+        "dev": true
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "fr-prisma-graphql:build:development",
+          "dev": true
+        },
+        "production": {
+          "buildTarget": "fr-prisma-graphql:build:production",
+          "dev": false
+        }
+      }
+    },
+    "export": {
+      "executor": "@nx/next:export",
+      "options": {
+        "buildTarget": "fr-prisma-graphql:build:production"
+      }
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "apps/fr/prisma-graphql/jest.config.ts"
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"]
+    }
+  },
+  "tags": []
+}
